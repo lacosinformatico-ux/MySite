@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>LacosMusic 🌐</title>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:#121212;
+    color:white;
+    display:flex;
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:220px;
+    background:#000;
+    height:100vh;
+    padding:20px;
+}
+
+.sidebar h2{
+    color:#1db954;
+    margin-bottom:20px;
+}
+
+.sidebar input{
+    width:100%;
+    padding:8px;
+    border-radius:5px;
+    border:none;
+    margin-bottom:20px;
+}
+
+.menu a{
+    display:block;
+    color:#aaa;
+    padding:10px 0;
+    text-decoration:none;
+}
+
+.menu a:hover{
+    color:white;
+}
+
+/* MAIN */
+.main{
+    flex:1;
+    padding:20px;
+}
+
+h1{
+    margin-bottom:20px;
+}
+
+/* GRID MUSIC */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.card{
+    background:#181818;
+    padding:10px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.card:hover{
+    background:#282828;
+}
+
+.card img{
+    width:100%;
+    border-radius:10px;
+}
+
+/* PLAYER */
+.player{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:#181818;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px 20px;
+}
+
+.controls button{
+    background:#1db954;
+    border:none;
+    padding:10px;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+.progress{
+    flex:1;
+    margin:0 20px;
+}
+
+progress{
+    width:100%;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>LacosMusic</h2>
+    <input type="text" placeholder="Buscar música...">
+
+    <div class="menu">
+        <a href="#">Início</a>
+        <a href="#">Playlists</a>
+        <a href="#">Favoritos</a>
+        <a href="#">Baixar App</a>
+    </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+    <h1>Qual a boa hoje?</h1>
+
+    <div class="grid">
+
+        <div class="card" onclick="playMusic('musica1.mp3')">
+            <img src="https://i.imgur.com/1.jpg">
+            <p>Pop Up</p>
+        </div>
+
+        <div class="card" onclick="playMusic('musica2.mp3')">
+            <img src="https://i.imgur.com/2.jpg">
+            <p>Romântico</p>
+        </div>
+
+        <div class="card" onclick="playMusic('musica3.mp3')">
+            <img src="https://i.imgur.com/3.jpg">
+            <p>Acústico</p>
+        </div>
+
+        <div class="card" onclick="playMusic('musica4.mp3')">
+            <img src="https://i.imgur.com/4.jpg">
+            <p>Festa</p>
+        </div>
+
+    </div>
+</div>
+
+<!-- PLAYER -->
+<div class="player">
+    <div>🎵 Tocando LacosMusic</div>
+
+    <div class="controls">
+        <button onclick="togglePlay()">▶</button>
+    </div>
+
+    <div class="progress">
+        <progress id="bar" value="0" max="100"></progress>
+    </div>
+</div>
+
+<!-- AUDIO -->
+<audio id="audio"></audio>
+
+<script>
+let audio = document.getElementById("audio");
+let bar = document.getElementById("bar");
+let playing = false;
+
+function playMusic(src){
+    audio.src = src;
+    audio.play();
+    playing = true;
+}
+
+function togglePlay(){
+    if(playing){
+        audio.pause();
+        playing = false;
+    }else{
+        audio.play();
+        playing = true;
+    }
+}
+
+audio.ontimeupdate = function(){
+    bar.value = (audio.currentTime / audio.duration) * 100;
+}
+</script>
+
+</body>
+</html>
